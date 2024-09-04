@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive HTML and CSS</title>
+    <style>
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            max-width: 90%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Code block and Buttons */
+        .code-block {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #6c63ff;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #5a54d1;
+        }
+
+        /* Next Button */
+        .next-btn {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff6347;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        .next-btn:hover {
+            background-color: #d9534f;
+        }
+
+        /* Appear animation */
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Centering Elements in Section */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        /* CSS effect example */
+        .css-box {
+            width: 150px;
+            height: 150px;
+            background-color: #888;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+        }
+
+        .css-box.active {
+            background: linear-gradient(135deg, #6c63ff, #992dff);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- First Section -->
+    <section class="section1">
+        <div class="content">
+            <div class="section-title">POWER OF HTML AND CSS</div>
+            <div class="glass">
+                <h2>A markup language</h2>
+                <p>Since HTML is a markup coding language, the complexity is very low. A few lines of code can create something amazing on the screen. It’s also a great addition for backend coding.</p>
+            </div>
+            <div class="code-block">
+                <code>&lt;h1&gt; Hey &lt;/h1&gt;</code>
+                <button class="btn" onclick="runCode()">Run</button>
+            </div>
+            <h1 id="output" style="display:none;">Hey</h1>
+            <button class="next-btn" onclick="scrollToNext('.section2')">Next</button>
+        </div>
+    </section>
+
+    <!-- Second Section -->
+    <section class="section2">
+        <div class="content">
+            <div class="section-title">CSS { }</div>
+            <div class="glass">
+                <h3>No CSS</h3>
+                <div class="css-box"></div>
+                <button class="btn" onclick="applyCSS()">CSS⭐</button>
+            </div>
+            <button class="next-btn" onclick="scrollToNext('.section3')">Next</button>
+        </div>
+    </section>
+
+    <!-- Third Section -->
+    <section class="section3">
+        <div class="content">
+            <div class="section-title">JAVASCRIPT</div>
+            <div class="glass">
+                <h2>Making it Interactive</h2>
+                <p>JavaScript allows you to create dynamic and interactive web experiences. You can manipulate the DOM, handle events, and bring your web pages to life.</p>
+            </div>
+            <div class="code-block">
+                <code>document.getElementById('demo').innerHTML = "Hello JavaScript!";</code>
+                <button class="btn" onclick="runJS()">Run JS</button>
+            </div>
+            <p id="demo" style="font-size: 2rem;"></p>
+            <button class="next-btn" onclick="scrollToNext('.section4')">Next</button>
+        </div>
+    </section>
+
+    <!-- Fourth Section -->
+    <section class="section4">
+        <div class="content">
+            <div class="section-title">Lets start</div>
+            <div class="glass">
+                <h2>Now that you know...</h2>
+                <p>In today's web development, making sure your website is responsive is crucial. soo we are gonna teach you how to make one</p>
+            </div>
+            <div class="code-block">
+                <code>Lets dive deeper</code>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth section appearance on scroll
+        document.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const triggerBottom = window.innerHeight / 5 * 4;
+
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+
+                if (sectionTop < triggerBottom) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+
+        // Initialize first section animation on load
+        window.addEventListener('load', () => {
+            document.querySelector('.section1').classList.add('visible');
+        });
+
+        // Run HTML code
+        function runCode() {
+            document.getElementById('output').style.display = 'block';
+        }
+
+        // Apply CSS effect
+        function applyCSS() {
+            const cssBox = document.querySelector('.css-box');
+            cssBox.classList.toggle('active');
+        }
+
+        // Run JavaScript code
+        function runJS() {
+            document.getElementById('demo').innerHTML = "Hello JavaScript!";
+        }
+
+        // Smooth scroll to the next section
+        function scrollToNext(sectionClass) {
+            document.querySelector(sectionClass).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
